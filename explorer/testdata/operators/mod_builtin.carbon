@@ -11,19 +11,9 @@
 
 package ExplorerTest api;
 
-// TODO: Implement this with some kind of reflection?
-external impl {.x: i32, .y: i32} as EqWith(Self) {
-  fn Equal[me: Self](other: Self) -> Bool {
-    return me.x == other.x and me.y == other.y;
-  }
-}
+// TODO: T:! Mod
+fn DoMod[T:! ModWith(.Self) where .Result == .Self](x: T, y: T) -> T { return x % y; }
 
 fn Main() -> i32 {
-  var t1: {.x: i32, .y: i32} = {.x = 5, .y = 2};
-  var t2: {.x: i32, .y: i32} = {.x = 5, .y = 2};
-  if (t1 == t2) {
-    return 0;
-  } else {
-    return 1;
-  }
+  return DoMod(4, 2);
 }

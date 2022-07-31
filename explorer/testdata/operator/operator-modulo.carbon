@@ -11,19 +11,46 @@
 
 package ExplorerTest api;
 
-// TODO: Implement this with some kind of reflection?
-external impl {.x: i32, .y: i32} as EqWith(Self) {
-  fn Equal[me: Self](other: Self) -> Bool {
-    return me.x == other.x and me.y == other.y;
-  }
+fn identFn( x: i32 ) -> i32{
+    return x;
 }
 
 fn Main() -> i32 {
-  var t1: {.x: i32, .y: i32} = {.x = 5, .y = 2};
-  var t2: {.x: i32, .y: i32} = {.x = 5, .y = 2};
-  if (t1 == t2) {
-    return 0;
-  } else {
-    return 1;
+  var x : i32 = 7 % 2;
+
+
+  if(  not (x == 1) ){
+      return 1;
   }
+  x = (3*3) % 3;
+  if( not (x == 0)){
+      return 2;
+  }
+
+  x = (4+4+4+4) % (2+1);
+  if(  not (x == 1) ){
+      return 3;
+  }
+
+  x = 15 % (identFn(2)+1);
+  if( not (x == 0)){
+      return 4;
+  }
+
+  x = -15 % 7;
+  if( not (x == -1)){
+      return 5;
+  }
+
+  x = 15 % -7;
+  if( not ( x == 1)){
+      return 6;
+  }
+
+  x = -15 % -identFn(7);
+  if( not (x == -1)){
+      return 7;
+  }
+
+  return 0;
 }

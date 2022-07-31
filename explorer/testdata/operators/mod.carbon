@@ -7,23 +7,18 @@
 // RUN: %{explorer} --parser_debug --trace_file=- %s 2>&1 | \
 // RUN:   %{FileCheck} --match-full-lines --allow-unused-prefixes %s
 // AUTOUPDATE: %{explorer} %s
-// CHECK: result: 0
+// CHECK: result: 1
 
 package ExplorerTest api;
 
-// TODO: Implement this with some kind of reflection?
-external impl {.x: i32, .y: i32} as EqWith(Self) {
-  fn Equal[me: Self](other: Self) -> Bool {
-    return me.x == other.x and me.y == other.y;
-  }
+class A { var n: i32; }
+
+external impl A as ModWith(i32) where .Result == A {
+  fn Op[me: Self](rhs: i32) -> A { return {.n = me.n % rhs}; }
 }
 
 fn Main() -> i32 {
-  var t1: {.x: i32, .y: i32} = {.x = 5, .y = 2};
-  var t2: {.x: i32, .y: i32} = {.x = 5, .y = 2};
-  if (t1 == t2) {
-    return 0;
-  } else {
-    return 1;
-  }
+  var a: A = {.n = 5};
+  a = a % 2;
+  return a.n;
 }
